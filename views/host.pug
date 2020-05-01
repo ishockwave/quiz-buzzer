@@ -1,0 +1,48 @@
+doctype html
+html
+  head
+    title=title
+    meta(name='viewport' content='width=device-width, initial-scale=1')
+    link(rel="stylesheet" href='/style.css')
+  body
+    div.bg-image
+    header
+      img.logo(src='/buzzer-logo.svg')
+
+    div.row
+      div.column
+        h2=`Punkte`
+        ol.js-points
+          each user, id in users
+            if users[id]["sid"] != ""
+              h3.points=`${users[id]["name"]} - ${users[id]["points"]}`
+        button.js-clearpoints='Punkte zurücksetzen'
+        
+      div.column
+        h2=`Buzzes`
+        ol.js-buzzes
+          each buzz, id in buzzes
+            div.row
+              div.column
+                button(class="right button-" + id + "-right")=`${buzz["name"]} ${(buzz["guess"] != "")? " - " + buzz["guess"]: ""}`
+              div.column
+                button(class="wrong button-" + id + "-wrong")=`${buzz["name"]} ${(buzz["guess"] != "")? " - " + buzz["guess"]: ""}`
+              script.
+                document.querySelector('.button-#{id}-right').addEventListener('click', () => {socket.emit('right', [#{id}, document.querySelector('[name=points_right]').value]    )})
+                document.querySelector('.button-#{id}-wrong').addEventListener('click', () => {socket.emit('wrong', [#{id}, document.querySelector('[name=points_wrong]').value]    )})
+        button.js-clear='Buzzes löschen'
+      div.column
+        h2=`Administration`
+        div.row
+          div.column
+            h3=`Punkte für richtige Antwort`
+            input(type='text' name='points_right' value="5" required='required')
+          div.column
+            h3=`Punkte für falsche Antwort`
+            input(type='text' name='points_wrong' value="1" required='required')
+        h2=`Schätzfrage`
+          input(type='text' name='guess_time' placeholder="Antwortzeit (Sekunden)" value="30" required='required')
+          button.js-push-guess="Schätzfrage starten"
+
+    script(src='/socket.io/socket.io.js')
+    script(src='/host.js')

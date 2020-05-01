@@ -1,0 +1,30 @@
+doctype html
+html
+  head
+    title=title
+    meta(name='viewport' content='width=device-width, initial-scale=1')
+    link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:500,700|Roboto:400,500,700,900")
+    link(rel="stylesheet" href='/style.css')
+  body.js-body
+    header
+      img.logo(src='/buzzer-logo.svg')
+
+    div.container
+      form.view.js-join
+        img(src="/lets-play.png" class="main-image")
+        h2="Let's play!"
+        input(type='text' name='name' placeholder='Name' required='required')
+        button(type='submit')='Beitreten'
+
+      div.view.js-joined.hidden
+        h2.js-points=`Du hast 0 Punkte.`
+        div.buzz-button
+          button.js-buzzer.buzzer()='Buzz!!!'
+        div.guess-text.hidden
+          h2.js-countdown-left=``
+          input(type='text' name='guess' placeholder='Antwort')
+        p.js-joined-info=""
+        button.js-edit.secondary='Name ändern'
+
+    script(src='/socket.io/socket.io.js')
+    script(src='/join.js')

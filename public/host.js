@@ -1,0 +1,57 @@
+const socket = io()
+const active = document.querySelector('.js-active')
+const buzzList = document.querySelector('.js-buzzes')
+const pointList = document.querySelector('.js-points')
+const clear = document.querySelector('.js-clear')
+const clearpoints = document.querySelector('.js-clearpoints')
+const pushGuess = document.querySelector('.js-push-guess')
+
+socket.on('buzzes', (buzzes) => {
+  let html = ""
+  buzzList.innerHTML = html
+  for (buzz in buzzes){
+    html += `<div class="row">
+      <div class="column">
+        <button class="right button-${buzz}-right">${buzzes[buzz]["name"]} ${(buzzes[buzz]["guess"] != "")? " - " + buzzes[buzz]["guess"]: ""}</button>
+      </div>
+      <div class="column">
+        <button class="wrong button-${buzz}-wrong">${buzzes[buzz]["name"]} ${(buzzes[buzz]["guess"] != "")? " - " + buzzes[buzz]["guess"]: ""}</button>
+      </div>
+    </div>`
+  }
+  buzzList.innerHTML = html
+  for (let buzz in buzzes){
+    document.querySelector('.button-' + buzz + '-right').addEventListener('click', () => {
+      socket.emit('right', [buzz, document.querySelector('[name=points_right]').value])
+    })
+    document.querySelector('.button-' + buzz + '-wrong').addEventListener('click', () => {
+      socket.emit('wrong', [buzz, document.querySelector('[name=points_wrong]').value])
+    })
+  }
+})
+
+socket.on('points', (users) => {
+  pointList.innerHTML = ""
+  var sorted = []
+  for (user in users) {
+    sorted[sorted.length] = users[user]
+  }
+  sorted.sort((a,b) => (a.points < b.points) ? 1 : ((b.points < a.points) ? -1 : 0));
+  for(var i=0; i<sorted.length; i++){
+    if(sorted[i]["sid"] != ""){
+      pointList.innerHTML += "<h3 class=points>" + sorted[i]["name"] + " - " +  sorted[i]["points"] + "</ol>"
+    }
+  }
+})
+
+clear.addEventListener('click', () => {
+  socket.emit('clear')
+})
+
+clearpoints.addEventListener('click', () => {
+  socket.emit('clearpoints')
+})
+
+pushGuess.addEventListener('click', () => {
+  socket.emit('guess', document.querySelector('[name=guess_time]').value)
+})
