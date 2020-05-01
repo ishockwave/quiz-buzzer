@@ -11,6 +11,18 @@ const guess = document.querySelector('.guess-text')
 
 let user = {}
 
+let oldpoints = 0
+
+function timeout(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function asyncConfetti() {
+  confetti.start()
+  await timeout(3000);
+  confetti.stop()
+}
+
 function ProgressCountdown(timeleft, text) {
   return new Promise((resolve, reject) => {
     var countdownTimer = setInterval(() => {
@@ -71,6 +83,16 @@ socket.on('points', (users) => {
           place = j+1
           break
         }
+      }
+      if(sorted[i]["points"] > oldpoints + 1){
+        oldpoints = sorted[i]["points"]
+        asyncConfetti()
+      }
+      else{
+        oldpoints = sorted[i]["points"]
+      }
+      if(parseInt(sorted[i]["points"]) == 0){
+        oldpoints = 0
       }
       pointInfo.innerText = "Du hast " + sorted[i]["points"] + " Punkte.\n"
       pointInfo.innerText += "Du bist Platz " + place + " von " + sorted.length;
