@@ -43,7 +43,9 @@ html
             input(type='text' name='points_wrong' value="1" required='required')
         h2=`Schätzfrage`
           input(type='text' name='guess_time' placeholder="Antwortzeit (Sekunden)" value="30" required='required')
-          button.js-push-guess="Schätzfrage starten"
+          button.js-push-guess
+            p(id="guess_text" style="margin:0;")="Schätzfrage starten"
+            i(class="icofont-spinner-alt-4", id="guess_spinner" style="display:none;")
 
     script(src='/socket.io/socket.io.js')
     script(src='/host.js')

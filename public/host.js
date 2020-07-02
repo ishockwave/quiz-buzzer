@@ -6,6 +6,19 @@ const clear = document.querySelector('.js-clear')
 const clearpoints = document.querySelector('.js-clearpoints')
 const pushGuess = document.querySelector('.js-push-guess')
 
+function ProgressCountdown(timeleft) {
+  return new Promise((resolve, reject) => {
+    var countdownTimer = setInterval(() => {
+      timeleft--;
+
+      if (timeleft <= 0) {
+        clearInterval(countdownTimer);
+        resolve(true);
+      }
+    }, 1000);
+  });
+}
+
 socket.on('buzzes', (buzzes) => {
   let html = ""
   buzzList.innerHTML = html
@@ -54,4 +67,12 @@ clearpoints.addEventListener('click', () => {
 
 pushGuess.addEventListener('click', () => {
   socket.emit('guess', document.querySelector('[name=guess_time]').value)
+  document.querySelector('#guess_text').hidden=true;
+  document.querySelector('#guess_spinner').style.display="inline-block";
+  document.querySelector(".js-push-guess").disabled = true;
+  ProgressCountdown(parseInt(document.querySelector('[name=guess_time]').value)).then(function(value) {
+    document.querySelector('#guess_text').hidden=false;
+    document.querySelector('#guess_spinner').style.display="none";
+    document.querySelector(".js-push-guess").disabled = false;
+  });
 })

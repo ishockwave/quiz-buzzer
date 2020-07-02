@@ -142,6 +142,23 @@ button {
   background-color: #981b1b;
 }
 
+@keyframes anim-rotate {
+	0% {
+		transform: rotate(0);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+#guess_spinner {
+	display: inline-block;
+	line-height: 1;
+  font-size: 50px;
+	animation: anim-rotate 2s infinite linear;
+	color: #fff;
+	text-shadow: 0 0 .25em rgba(255,255,255, .3);
+}
+
 button:hover {
   background-color: rgb(22, 29, 153);
 }
@@ -153,6 +170,12 @@ button:active {
 }
 button:focus {
   box-shadow: 0 0 0 3px #ABB7FF;
+}
+
+button:disabled,
+button[disabled]{
+  background-color: #cccccc;
+  color: #666666;
 }
 
 .main-image {
