@@ -60,6 +60,7 @@ form.addEventListener('submit', (e) => {
   form.classList.add('hidden')
   joined.classList.remove('hidden')
   body.classList.add('buzzer-mode')
+  document.getElementById("footer-link").style.color = 'white';
 })
 
 buzzer.addEventListener('click', (e) => {

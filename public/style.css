@@ -150,8 +150,10 @@ button {
 		transform: rotate(360deg);
 	}
 }
+
 #guess_spinner {
 	display: inline-block;
+  height: 47.0px;
 	line-height: 1;
   font-size: 50px;
 	animation: anim-rotate 2s infinite linear;
@@ -180,6 +182,17 @@ button[disabled]{
 
 .main-image {
   width: 90%;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0px;
+  right: 5px;
+}
+
+.styleless-link{
+  color: rgb(0, 0, 0);
+  text-decoration: none;
 }
 
 .buzzer {

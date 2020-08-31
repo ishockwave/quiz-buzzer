@@ -5,6 +5,7 @@ html
     meta(name='viewport' content='width=device-width, initial-scale=1')
     link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:500,700|Roboto:400,500,700,900")
     link(rel="stylesheet" href='/style.css')
+    link(rel="stylesheet" href='/icofont/icofont.min.css')
   body.js-body
     header
       img.logo(src='/buzzer-logo.svg')
@@ -25,6 +26,12 @@ html
           input(type='text' name='guess' placeholder='Antwort')
         p.js-joined-info=""
         button.js-edit.secondary='Name ändern'
+    div.footer
+      a.styleless-link(id="footer-link" href="https://github.com/ishockwave")
+        span(class="icofont-code-alt")
+        span=" with "
+        span(class="icofont-heart")
+        span=" by Marco Reisacher"
 
     script(src='/socket.io/socket.io.js')
     script(src='/confetti.min.js')
