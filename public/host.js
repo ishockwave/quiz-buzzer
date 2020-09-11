@@ -5,6 +5,8 @@ const pointList = document.querySelector('.js-points')
 const clear = document.querySelector('.js-clear')
 const clearpoints = document.querySelector('.js-clearpoints')
 const pushGuess = document.querySelector('.js-push-guess')
+var audio = new Audio('sounds/buzz.mp3')
+var sound_override = true
 
 function ProgressCountdown(timeleft) {
   return new Promise((resolve, reject) => {
@@ -41,6 +43,12 @@ socket.on('buzzes', (buzzes) => {
       socket.emit('wrong', [buzz, document.querySelector('[name=points_wrong]').value])
     })
   }
+  if (document.getElementById("buzz_sound").checked && sound_override){
+    var playPromise = audio.play();
+  }
+  else if (!sound_override){
+    sound_override = true;
+  }
 })
 
 socket.on('points', (users) => {
@@ -58,6 +66,7 @@ socket.on('points', (users) => {
 })
 
 clear.addEventListener('click', () => {
+  sound_override = false;
   socket.emit('clear')
 })
 

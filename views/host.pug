@@ -41,6 +41,13 @@ html
           div.column
             h3=`Punkte für falsche Antwort`
             input(type='text' name='points_wrong' value="1" required='required')
+        div.row
+          div.column(style="margin:auto;")
+            label.switch
+              input(type='checkbox', id="buzz_sound", checked="true")
+              span.slider.round
+          div.column
+              h3=`Buzz Sound`
         h2=`Schätzfrage`
           input(type='text' name='guess_time' placeholder="Antwortzeit (Sekunden)" value="30" required='required')
           button.js-push-guess
