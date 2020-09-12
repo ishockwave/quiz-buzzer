@@ -8,6 +8,10 @@ const editInfo = document.querySelector('.js-edit')
 const pointInfo = document.querySelector('.js-points')
 const buzzer_div = document.querySelector('.buzz-button')
 const guess = document.querySelector('.guess-text')
+const mc1_button = document.querySelector('.mc1')
+const mc2_button = document.querySelector('.mc2')
+const mc3_button = document.querySelector('.mc3')
+const mc4_button = document.querySelector('.mc4')
 
 let user = {}
 
@@ -65,6 +69,34 @@ form.addEventListener('submit', (e) => {
 
 buzzer.addEventListener('click', (e) => {
   socket.emit('buzz', [user, ""])
+})
+
+mc1_button.addEventListener('click', (e) => {
+  mc1_button.classList.add("mc_selected");
+  mc2_button.classList.remove("mc_selected");
+  mc3_button.classList.remove("mc_selected");
+  mc4_button.classList.remove("mc_selected");
+})
+
+mc2_button.addEventListener('click', (e) => {
+  mc2_button.classList.add("mc_selected");
+  mc1_button.classList.remove("mc_selected");
+  mc3_button.classList.remove("mc_selected");
+  mc4_button.classList.remove("mc_selected");
+})
+
+mc3_button.addEventListener('click', (e) => {
+  mc3_button.classList.add("mc_selected");
+  mc1_button.classList.remove("mc_selected");
+  mc2_button.classList.remove("mc_selected");
+  mc4_button.classList.remove("mc_selected");
+})
+
+mc4_button.addEventListener('click', (e) => {
+  mc4_button.classList.add("mc_selected");
+  mc1_button.classList.remove("mc_selected");
+  mc2_button.classList.remove("mc_selected");
+  mc3_button.classList.remove("mc_selected");
 })
 
 socket.on('points', (users) => {
