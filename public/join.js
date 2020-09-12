@@ -7,7 +7,9 @@ const joinedInfo = document.querySelector('.js-joined-info')
 const editInfo = document.querySelector('.js-edit')
 const pointInfo = document.querySelector('.js-points')
 const buzzer_div = document.querySelector('.buzz-button')
+const countdown = document.querySelector('.countdown')
 const guess = document.querySelector('.guess-text')
+const multipleChoice = document.querySelector('.multiple_choice')
 const mc1_button = document.querySelector('.mc1')
 const mc2_button = document.querySelector('.mc2')
 const mc3_button = document.querySelector('.mc3')
@@ -137,14 +139,36 @@ socket.on('points', (users) => {
 socket.on('start_guess', (time) => {
   buzzer_div.classList.add('hidden')
   guess.classList.remove('hidden')
+  countdown.classList.remove('hidden')
   document.querySelector(".js-countdown-left").textContent = time + " Sekunden zum Antworten verbleiben.";
   document.querySelector('[name=guess]').value = ""
   document.querySelector('[name=guess]').focus()
 
   ProgressCountdown(parseInt(time), '.js-countdown-left').then(function(value) {
     buzzer_div.classList.remove('hidden')
+    countdown.classList.add('hidden')
     guess.classList.add('hidden')
     socket.emit('buzz', [user, document.querySelector('[name=guess]').value])
+  });
+})
+
+socket.on('start_mc', (time) => {
+  buzzer_div.classList.add('hidden')
+  multipleChoice.classList.remove('hidden')
+  countdown.classList.remove('hidden')
+  document.querySelector(".js-countdown-left").textContent = time + " Sekunden zum Antworten verbleiben.";
+  document.querySelector('[name=guess]').value = ""
+  document.querySelector('[name=guess]').focus()
+
+  ProgressCountdown(parseInt(time), '.js-countdown-left').then(function(value) {
+    buzzer_div.classList.remove('hidden')
+    countdown.classList.add('hidden')
+    multipleChoice.classList.add('hidden')
+    socket.emit('buzz', [user, document.querySelector('.mc_selected').textContent])
+    mc1_button.classList.remove("mc_selected");
+    mc2_button.classList.remove("mc_selected");
+    mc3_button.classList.remove("mc_selected");
+    mc4_button.classList.remove("mc_selected");
   });
 })
 

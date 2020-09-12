@@ -5,6 +5,7 @@ const pointList = document.querySelector('.js-points')
 const clear = document.querySelector('.js-clear')
 const clearpoints = document.querySelector('.js-clearpoints')
 const pushGuess = document.querySelector('.js-push-guess')
+const pushMc = document.querySelector('.js-push-mc')
 var audio = new Audio('sounds/buzz.mp3')
 var sound_override = true
 
@@ -79,9 +80,25 @@ pushGuess.addEventListener('click', () => {
   document.querySelector('#guess_text').hidden=true;
   document.querySelector('#guess_spinner').style.display="inline-block";
   document.querySelector(".js-push-guess").disabled = true;
+  document.querySelector(".js-push-mc").disabled = true;
   ProgressCountdown(parseInt(document.querySelector('[name=guess_time]').value)).then(function(value) {
     document.querySelector('#guess_text').hidden=false;
     document.querySelector('#guess_spinner').style.display="none";
     document.querySelector(".js-push-guess").disabled = false;
+    document.querySelector(".js-push-mc").disabled = false;
+  });
+})
+
+pushMc.addEventListener('click', () => {
+  socket.emit('mc', document.querySelector('[name=mc_time]').value)
+  document.querySelector('#mc_text').hidden=true;
+  document.querySelector('#mc_spinner').style.display="inline-block";
+  document.querySelector(".js-push-guess").disabled = true;
+  document.querySelector(".js-push-mc").disabled = true;
+  ProgressCountdown(parseInt(document.querySelector('[name=mc_time]').value)).then(function(value) {
+    document.querySelector('#mc_text').hidden=false;
+    document.querySelector('#mc_spinner').style.display="none";
+    document.querySelector(".js-push-guess").disabled = false;
+    document.querySelector(".js-push-mc").disabled = false;
   });
 })

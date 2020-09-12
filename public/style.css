@@ -161,6 +161,16 @@ button {
 	text-shadow: 0 0 .25em rgba(255,255,255, .3);
 }
 
+#mc_spinner {
+	display: inline-block;
+  height: 47.0px;
+	line-height: 1;
+  font-size: 50px;
+	animation: anim-rotate 2s infinite linear;
+	color: #fff;
+	text-shadow: 0 0 .25em rgba(255,255,255, .3);
+}
+
 button:hover {
   background-color: rgb(22, 29, 153);
 }
@@ -224,11 +234,11 @@ button[disabled]{
 }
 
 input:checked + .slider {
-  background-color: #2196F3;
+  background-color: #161D99;
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
+  box-shadow: 0 0 1px #161D99;
 }
 
 input:checked + .slider:before {

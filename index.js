@@ -76,6 +76,10 @@ io.on('connection', (socket) => {
     io.emit('start_guess', time)
   })
 
+  socket.on('mc', (time) => {
+    io.emit('start_mc', time)
+  })
+
   socket.on('disconnect', () => {
     for( user in data.users){
       if(data.users[user]["sid"] == socket.id){

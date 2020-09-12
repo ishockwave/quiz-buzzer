@@ -21,6 +21,8 @@ html
         h2.js-points=`Du hast 0 Punkte.`
         div.buzz-button
           button.js-buzzer.buzzer()='Buzz!!!'
+        div.countdown.hidden
+          h2.js-countdown-left=``
         div.guess-text.hidden
           h2.js-countdown-left=``
           input(type='text' name='guess' placeholder='Antwort')
@@ -29,17 +31,17 @@ html
             div.row
               div.column
                 div.row
-                  button.mc1='Buzz!!!'
+                  button.mc1='A'
               div.column
                 div.row
-                  button.mc2='Buzz!!!'
+                  button.mc2='B'
             div.row
               div.column
                 div.row
-                  button.mc3='Buzz!!!'
+                  button.mc3='C'
               div.column
                 div.row
-                  button.mc4='Buzz!!!'
+                  button.mc4='D'
 
         p.js-joined-info=""
         button.js-edit.secondary='Name ändern'
