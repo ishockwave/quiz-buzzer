@@ -1,5 +1,5 @@
 # Quiz Buzzer
-Buzzer for quizzes. Including point tracking and guesstimation
+Buzzer for quizzes. Including point tracking, guesstimation and multiple choice.
 
 # Installation
 * Install latest Node LTS release
