@@ -11,6 +11,7 @@ const title = 'Buzzer'
 let data = {
   users: new Set(),
   buzzes: new Set(),
+  questions: new Array(),
 }
 
 const getData = () => ({
@@ -18,11 +19,18 @@ const getData = () => ({
   buzzes: data.buzzes,
 })
 
+const getHostData = () => ({
+  users: data.users,
+  buzzes: data.buzzes,
+  questions: data.questions,
+})
+
 app.use(express.static('public'))
 app.set('view engine', 'pug')
 
 app.get('/', (req, res) => res.render('index', { title }))
-app.get('/host', (req, res) => res.render('host', Object.assign({ title }, getData())))
+app.get('/live', (req, res) => res.render('live', Object.assign({ title }, getData())))
+app.get('/host', (req, res) => res.render('host', Object.assign({ title }, getHostData())))
 
 io.on('connection', (socket) => {
   socket.on('join', (user) => {
@@ -78,6 +86,18 @@ io.on('connection', (socket) => {
 
   socket.on('mc', (time) => {
     io.emit('start_mc', time)
+  })
+
+  socket.on('save_questions', (socket_data) => {
+    data.questions = socket_data
+  })
+
+  socket.on('new_question', (socket_data) => {
+    io.emit('question', socket_data)
+  })
+
+  socket.on('blank', (selections) => {
+    io.emit('blank_live', selections)
   })
 
   socket.on('disconnect', () => {

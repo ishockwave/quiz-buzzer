@@ -6,8 +6,16 @@ const clear = document.querySelector('.js-clear')
 const clearpoints = document.querySelector('.js-clearpoints')
 const pushGuess = document.querySelector('.js-push-guess')
 const pushMc = document.querySelector('.js-push-mc')
+const pushSaveQ = document.querySelector('.js-save-questions')
+const pushNextQ = document.querySelector('.js-next-question')
+const pushPrevQ = document.querySelector('.js-prev-question')
+const checkboxElems = document.querySelectorAll("input[type='checkbox']");
+
 var audio = new Audio('sounds/buzz.mp3')
 var sound_override = true
+
+var q_id = -1
+var selections = {};
 
 function ProgressCountdown(timeleft) {
   return new Promise((resolve, reject) => {
@@ -20,6 +28,21 @@ function ProgressCountdown(timeleft) {
       }
     }, 1000);
   });
+}
+
+for (var i = 0; i < checkboxElems.length; i++) {
+  checkboxElems[i].addEventListener("click", displayCheck);
+}
+
+function displayCheck(e) {
+  if (e.target.checked) {
+    selections[e.target.name] = true
+  }
+  else{
+    selections[e.target.name] = false
+  }
+
+  socket.emit("blank", selections)
 }
 
 socket.on('buzzes', (buzzes) => {
@@ -73,6 +96,33 @@ clear.addEventListener('click', () => {
 
 clearpoints.addEventListener('click', () => {
   socket.emit('clearpoints')
+})
+
+pushSaveQ.addEventListener('click', () => {
+  var questions = document.getElementsByClassName("questions")[0].value.split("\n")
+  socket.emit('save_questions', questions)
+})
+
+pushNextQ.addEventListener('click', () => {
+  var questions = document.getElementsByClassName("questions")[0].value.split("\n")
+  
+  if(typeof questions[q_id + 1] !== "undefined"  && q_id < questions.length && questions.length > 0){
+    q_id += 1
+    var question_string = questions[q_id]
+    document.getElementsByClassName("curr-question")[0].innerText = "Frage " + (q_id+1) + " von " + questions.length
+    socket.emit('new_question', [q_id, questions.length, question_string])
+  }
+})
+
+pushPrevQ.addEventListener('click', () => {
+  var questions = document.getElementsByClassName("questions")[0].value.split("\n")
+
+  if(typeof questions[q_id - 1] !== "undefined" && q_id > 0){
+    q_id -= 1
+    var question_string = questions[q_id]
+    document.getElementsByClassName("curr-question")[0].innerText = "Frage " + (q_id+1) + " von " + questions.length
+    socket.emit('new_question', [q_id, questions.length, question_string])
+  }
 })
 
 pushGuess.addEventListener('click', () => {

@@ -19,6 +19,17 @@ html
               h3.points=`${users[id]["name"]} - ${users[id]["points"]}`
         button.js-clearpoints='Punkte zurücksetzen'
 
+        h2=`Fragen`
+        - var quest_list = ""
+        each question in questions
+          - quest_list=quest_list+`${question}`+"\n"
+        - quest_list=quest_list.trim()
+        textarea.questions=quest_list
+        button.js-save-questions='Fragen speichern'
+        h3.curr-question="Frage x von x"
+        button.js-next-question='Nächste Frage'
+        button.js-prev-question='Vorherige Frage'
+
       div.column
         h2=`Buzzes`
         ol.js-buzzes
@@ -58,6 +69,29 @@ html
           button.js-push-mc
             p(id="mc_text" style="margin:0;")="Multiple Choice starten"
             i(class="icofont-spinner-alt-4", id="mc_spinner" style="display:none;")
+        h2=`Blank Streamview`
+          div.column
+            input(type='checkbox', name='blank1_1')
+            input(type='checkbox', name='blank1_2')
+            input(type='checkbox', name='blank1_3', disabled="true")
+            input(type='checkbox', name='blank1_4', disabled="true")
+            input(type='checkbox', name='blank1_5')
+            input(type='checkbox', name='blank1_6')
+          div.column
+            input(type='checkbox', name='blank2_1')
+            input(type='checkbox', name='blank2_2')
+            input(type='checkbox', name='blank2_3', disabled="true")
+            input(type='checkbox', name='blank2_4', disabled="true")
+            input(type='checkbox', name='blank2_5')
+            input(type='checkbox', name='blank2_6')
+          div.column
+            input(type='checkbox', name='blank3_1')
+            input(type='checkbox', name='blank3_2')
+            input(type='checkbox', name='blank3_3')
+            input(type='checkbox', name='blank3_4')
+            input(type='checkbox', name='blank3_5')
+            input(type='checkbox', name='blank3_6')
+
 
     script(src='/socket.io/socket.io.js')
     script(src='/host.js')

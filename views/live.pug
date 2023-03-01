@@ -1,0 +1,27 @@
+doctype html
+html
+  head
+    title=title
+    meta(name='viewport' content='width=device-width, initial-scale=1')
+    link(rel="stylesheet" href='/style.css')
+    link(rel="stylesheet" href='/live.css')
+    link(rel="stylesheet" href='/icofont/icofont.min.css')
+    link(rel="stylesheet" href='/animate.min.css')
+  body
+    div.wrapper
+        div.host
+            div.row
+                h1.question=""
+        div.blank
+        each user, id in users
+            if users[id]["sid"] != ""
+                div.user_context
+                    div.user
+                        div.row
+                            h3(class="name " + id)=`${users[id]["name"]}`
+                        div.row
+                            h3(class="points " + id)=`${users[id]["points"]} Punkte`
+                        div.row
+                            h4(class="answer " + id)=""
+    script(src='/socket.io/socket.io.js')
+    script(src='/live.js')
